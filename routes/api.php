@@ -19,26 +19,44 @@ Route::get('/ping', function(){
 });
 
 Route::get('/401', [AuthController::class, 'unauthorized'])->name('login');
-
 Route::get('auth/login', [AuthController::class, 'login']);
-Route::get('auth/register', [AuthController::class, 'register']);
+Route::post('auth/register', [AuthController::class, 'register']);
 
-Route::middlware('auth:api')->group(function(){
+Route::middleware('auth:api')->group(function(){
     Route::post('auth/validate', [AuthController::class, 'validateToken']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-    //Mural de Avisos
     Route::get('/walls', [WallController::class, 'getAll']);
     Route::post('/wall/{id}/like', [WallController::class, 'like']);
 
-    // Documentos
     Route::get('/docs', [DocController::class, 'getAll']);
 
-    //Livro de Ocorrencias
     Route::get('/warnings', [WarningController::class, 'getMyWarnings']);
     Route::post('/warnings', [WarningController::class, 'setWarning']);
     Route::post('/warning/file', [WarningController::class, 'setWarning']);
 
+    Route::get('/billets', [BilletController::class, 'getAll']);
+
+    Route::get('/foundandlost', [FoundAndLostController::class, 'getAll']);
+    Route::post('/foundandlost', [FoundAndLostController::class, 'insert']);
+    Route::put('/foundandlost/{id}', [FoundAndLostController::class, 'update']);
+
+    Route::get('/unit/{id}', [UnitController::class, 'getInfo']);
+    Route::post('/unit/{id}/addPerson', [UnitController::class, 'addPerson']);
+    Route::post('/unit/{id}/addVeiculo', [UnitController::class, 'addVeiculo']);
+    Route::post('/unit/{id}/addPet', [UnitController::class, 'addPet']);
+    Route::post('/unit/{id}/removePerson', [UnitController::class, 'removePerson']);
+    Route::post('/unit/{id}/removeVeiculo', [UnitController::class, 'removeVeiculo']);
+    Route::post('/unit/{id}/removePet', [UnitController::class, 'removePet']);
+
+    Route::get('/reservations', [ReservationController::class, 'getReservation']);
+    Route::post('/reservation/{id}', [ReservationController::class, 'setReservation']);
+
+    Route::get('/reservation/{id}/disableddates', [ReservationController::class, 'getDisabledDates']);
+    Route::get('/reservation/{id}/times', [ReservationController::class, 'getTimes']);
+
+    Route::get('/myreservations', [ReservationController::class, 'getMyreservations']);
+    Route::delete('/myreservations/{id}', [ReservationController::class, 'delMyreservations']);
 
 
 });
