@@ -32,8 +32,8 @@ Route::middleware('auth:api')->group(function(){
     Route::get('/docs', [DocController::class, 'getAll']);
 
     Route::get('/warnings', [WarningController::class, 'getMyWarnings']);
-    Route::post('/warnings', [WarningController::class, 'setWarning']);
-    Route::post('/warning/file', [WarningController::class, 'setWarning']);
+    Route::post('/warning', [WarningController::class, 'setWarning']);
+    Route::post('/warning/file', [WarningController::class, 'addWarningFile']);
 
     Route::get('/billets', [BilletController::class, 'getAll']);
 
